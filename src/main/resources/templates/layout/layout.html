@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:fragment="head" xmlns:th="http://www.thymeleaf.org">
+
+</head>
+
+
+<body>
+
+	<!-- navbar -->
+	<nav
+		class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+		id="layout-navbar" th:fragment="navbar">
+		<div
+			class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+			<a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+				<i class="bx bx-menu bx-sm"></i>
+			</a>
+		</div>
+
+		<div class="navbar-nav-right d-flex align-items-center"
+			id="navbar-collapse">
+			<!-- Search
+			<div class="navbar-nav align-items-center">
+				<div class="nav-item d-flex align-items-center">
+					<i class="bx bx-search fs-4 lh-0"></i>
+					<input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..."
+						aria-label="Search..." />
+				</div>
+			</div>
+
+			 /Search -->
+
+			<ul class="navbar-nav flex-row align-items-center ms-auto">
+				<!-- Place this tag where you want the button to render. -->
+
+
+				<!-- User -->
+				<li class="nav-item navbar-dropdown dropdown-user dropdown"><a
+					class="nav-link dropdown-toggle hide-arrow"
+					href="javascript:void(0);" data-bs-toggle="dropdown">
+						<div class="avatar avatar-online">
+							<img src="/assets/img/avatars/default.png" alt
+								class="w-px-40 h-auto rounded-circle" />
+						</div>
+				</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item" href="#">
+								<div class="d-flex">
+									<div class="flex-shrink-0 me-3">
+										<div class="avatar avatar-online">
+											<img src="/assets/img/avatars/default.png" alt
+												class="w-px-40 h-auto rounded-circle" />
+										</div>
+									</div>
+									<div class="flex-grow-1">
+										<span class="fw-medium d-block" th:text="${user.name}"></span>
+										<small class="text-muted" th:if="${user.type == 1}">Admin</small>
+										<small class="text-muted" th:if="${user.type == 2}">Maestro</small>
+										<small class="text-muted" th:if="${user.type == 3}">Estudiante</small>
+									</div>
+								</div>
+						</a></li>
+						<li>
+							<div class="dropdown-divider"></div>
+						</li>
+						<li><a class="dropdown-item" href="#"> <i
+								class="bx bx-user me-2"></i> <span class="align-middle">Mi
+									perfil</span>
+						</a></li>
+						<li><a class="dropdown-item" href="#"> <i
+								class="bx bx-cog me-2"></i> <span class="align-middle">Ajustes</span>
+						</a></li>
+						<li><a class="dropdown-item" href="#"> <span
+								class="d-flex align-items-center align-middle"> <i
+									class="flex-shrink-0 bx bx-credit-card me-2"></i> <span
+									class="flex-grow-1 align-middle ms-1">Billing</span> <span
+									class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+							</span>
+						</a></li>
+						<li>
+							<div class="dropdown-divider"></div>
+						</li>
+						<li><a class="dropdown-item" th:href="@{/logout-session}">
+								<i class="bx bx-power-off me-2"></i> <span class="align-middle">Cerrar
+									sesión</span>
+						</a></li>
+					</ul></li>
+				<!--/ User -->
+			</ul>
+		</div>
+	</nav>
+
+	<!-- navbar -->
+	<!-- Admin Menu -->
+	<aside id="layout-menu"
+		class="layout-menu menu-vertical menu bg-menu-theme"
+		th:fragment="adminmenu">
+		<div class="app-brand demo">
+			<a href="/" class="app-brand-link"> <span
+				class="app-brand-logo demo">
+				<img src="/assets/img/favicon/tevapro.png" height="35" width="24" alt="TeachEvaluation PRO"/>
+			</span> <span class="app-brand-text demo menu-text fw-bold ms-2">Tevapro</span>
+			</a> <a href="javascript:void(0);"
+				class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+				<i class="bx bx-chevron-left bx-sm align-middle"></i>
+			</a>
+		</div>
+
+		<div class="menu-inner-shadow"></div>
+
+		<ul class="menu-inner py-1">
+			<!-- Dashboards -->
+			<li class="menu-item active open" th:if="${user.type == 1}"><a
+				href="javascript:void(0);" class="menu-link menu-toggle"> <i
+					class="menu-icon tf-icons bx bx-home-circle"></i>
+					<div data-i18n="Dashboards">Admin</div>
+			</a>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/filial-crud"
+						class="menu-link">
+							<div data-i18n="Registros">Registros</div>
+					</a></li>
+
+				</ul>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/admin/school"
+						class="menu-link">
+							<div data-i18n="Registros">Administrar escuela</div>
+					</a></li>
+
+				</ul></li>
+			<!-- Dashboards -->
+			<li class="menu-item active " th:if="${user.type != 1}"><a
+				href="javascript:void(0);" class="menu-link menu-toggle"> <i
+					class="menu-icon tf-icons bx bx-home-circle"></i>
+					<div data-i18n="Dashboards">Panel</div>
+					<div class="badge bg-danger rounded-pill ms-auto">5</div>
+			</a>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/dashboard"
+						class="menu-link">
+							<div data-i18n="Inicio">Inicio</div>
+					</a></li>
+					<li class="menu-item"><a href="" class="menu-link">
+							<div data-i18n="Examenes">Examenes</div>
+					</a></li>
+					<li class="menu-item" th:if="${user.type == 2}"><a
+						href="/app/exam-creator" class="menu-link">
+							<div data-i18n="Creador de examanes">Creador de examenes</div>
+					</a></li>
+					<li class="menu-item" th:if="${user.type == 2}"><a
+						href="/app/classrooms" target="" class="menu-link">
+							<div data-i18n="Aulas">Aulas</div>
+
+					</a></li>
+					<li class="menu-item"><a href="#" target="" class="menu-link">
+							<div data-i18n="Materias">Materias</div>
+					</a></li>
+
+				</ul></li>
+
+
+
+			<!-- Misc -->
+			<li class="menu-header small text-uppercase"><span
+				class="menu-header-text">Misc</span></li>
+			<li class="menu-item"><a
+				href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+				target="_blank" class="menu-link"> <i
+					class="menu-icon tf-icons bx bx-support"></i>
+					<div data-i18n="Support">Support</div>
+			</a></li>
+			<li class="menu-item"><a
+				href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+				target="_blank" class="menu-link"> <i
+					class="menu-icon tf-icons bx bx-file"></i>
+					<div data-i18n="Documentation">Documentation</div>
+			</a></li>
+		</ul>
+	</aside>
+	<!-- / Admin Menu -->
+	<!-- Menu -->
+	<aside id="layout-menu"
+		class="layout-menu menu-vertical menu bg-menu-theme"
+		th:fragment="menu">
+		<div class="app-brand demo">
+			<a href="/" class="app-brand-link"> <span
+				class="app-brand-logo demo">
+			<img src="/assets/img/favicon/tevapro.png" height="35" width="24" alt="TeachEvaluation PRO"/>
+			</span> <span class="app-brand-text demo menu-text fw-bold ms-2">Tevapro</span>
+			</a> <a href="javascript:void(0);"
+				class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+				<i class="bx bx-chevron-left bx-sm align-middle"></i>
+			</a>
+		</div>
+
+		<div class="menu-inner-shadow"></div>
+
+		<ul class="menu-inner py-1">
+			<!-- Dashboards -->
+			<li class="menu-item active" th:if="${user.type == 1}"><a
+				href="javascript:void(0);" class="menu-link menu-toggle"> <i
+					class="menu-icon tf-icons bx bx-home-circle"></i>
+					<div data-i18n="Dashboards">Admin</div>
+			</a>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/filial-crud"
+						class="menu-link">
+							<div data-i18n="Registros">Registros</div>
+					</a></li>
+
+				</ul>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/admin/school"
+						class="menu-link">
+							<div data-i18n="Registros">Administrar escuela</div>
+					</a></li>
+
+				</ul></li>
+			<!-- Dashboards -->
+			<li class="menu-item active open" th:if="${user.type != 1}"><a
+				href="javascript:void(0);" class="menu-link menu-toggle"> <i
+					class="menu-icon tf-icons bx bx-home-circle"></i>
+					<div data-i18n="Dashboards">Panel</div>
+					<div class="badge bg-danger rounded-pill ms-auto">5</div>
+			</a>
+				<ul class="menu-sub">
+					<li class="menu-item"><a href="/app/dashboard"
+						class="menu-link">
+							<div data-i18n="Inicio">Inicio</div>
+					</a></li>
+					<li class="menu-item"><a href="" class="menu-link">
+							<div data-i18n="Examenes">Examenes</div>
+					</a></li>
+					<li class="menu-item" th:if="${user.type == 2}"><a
+						href="/app/exam-creator" class="menu-link">
+							<div data-i18n="Creador de examanes">Creador de examenes</div>
+					</a></li>
+					<li class="menu-item" th:if="${user.type == 2}"><a
+						href="/app/classrooms" target="" class="menu-link">
+							<div data-i18n="Aulas">Aulas</div>
+
+					</a></li>
+					<li class="menu-item"><a href="#" target="" class="menu-link">
+							<div data-i18n="Materias">Materias</div>
+					</a></li>
+
+				</ul></li>
+
+
+
+			<!-- Misc -->
+			<li class="menu-header small text-uppercase"><span
+				class="menu-header-text">Misc</span></li>
+			<li class="menu-item"><a
+				href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+				target="_blank" class="menu-link"> <i
+					class="menu-icon tf-icons bx bx-support"></i>
+					<div data-i18n="Support">Support</div>
+			</a></li>
+			<li class="menu-item"><a
+				href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+				target="_blank" class="menu-link"> <i
+					class="menu-icon tf-icons bx bx-file"></i>
+					<div data-i18n="Documentation">Documentation</div>
+			</a></li>
+		</ul>
+	</aside>
+	<!-- / Menu -->
+
+	<div th:fragment="pluginfooter"></div>
+	<!-- Footer -->
+	<footer class="content-footer footer bg-footer-theme"
+		th:fragment="footer">
+		<div
+			class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+			<div class="mb-2 mb-md-0">
+				©
+				<script>
+					document.write(new Date().getFullYear());
+				</script>
+				TeachEvaluationPro
+
+			</div>
+			<div class="d-none d-lg-inline-block">
+				<a href="https://themeselection.com/license/"
+					class="footer-link me-4" target="_blank">Licencia</a> <a
+					href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+					target="_blank" class="footer-link me-4">Documentación</a> <a
+					href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+					target="_blank" class="footer-link">Soporte</a>
+			</div>
+		</div>
+	</footer>
+	<!-- / Footer -->
+
+</body>
+
+</html>

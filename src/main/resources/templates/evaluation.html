@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Langapp</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="/evaluation_assets/style.css">
+
+	<script th:inline="javascript">
+
+		var originaltext = '[(${#strings.escapeJavaScript(originalText)})]';
+
+		var translatetext = '[[${translateText}]]';
+		var wordslist = '[[${wordsList}]]';
+
+
+		/* Obtener el array Java y convertirlo a lista de JavaScript */
+		var arrayJava = '[[${wordsList}]]'; // Obtener el array Java
+
+		// Convertir el array Java a lista de JavaScript
+		var listaJavaScript = [];
+		/*[# th:each="element : ${wordsList}"]*/
+		listaJavaScript.push([[${element}]]); // Agregar cada elemento a la lista
+		/*[/]*/
+
+		// Mostrar la lista JavaScript en la consola para verificar
+		console.log(listaJavaScript);
+
+	</script>
+	<script defer type="text/javascript" th:src="@{/evaluation_assets/exercises.js}"></script>
+	<script defer type="text/javascript" th:src="@{/evaluation_assets/script.js}"></script>
+	<script defer type="text/javascript" th:src="@{/evaluation_assets/incorrectAnswer.js}"></script>
+	<script defer type="text/javascript" th:src="@{/evaluation_assets/timer.js}"></script>
+
+
+
+</head>
+
+<body>
+	<div id="progress-container">
+		<div id="progress-bar"></div>
+	</div>
+	<div id="timer-container">
+		<span id="timer">00:00</span>
+	</div>
+	<div class="wrapper">
+		<h1 th:text="${headerText}"></h1>
+		<div class="top__container">
+			<div class="image_text__container">
+				<img src="/evaluation_assets/exam.png" alt="exam" >
+				<p th:if="${incorrectAnswer}" th:text="${originalText}" id="original__text"></p>
+				<p th:unless="${incorrectAnswer}" id="original__text"></p>
+
+			</div>
+			<div id="destination__container">
+			</div>
+		</div>
+		<div th:if="${incorrectAnswer}">
+			<span th:text="${incorrectAnswerText}"></span>
+			<div><span th:text="${incorrectAnswerClient}"></span></div>
+
+		</div>
+		<div th:unless="${incorrectAnswer}" id="origin__container">
+		</div>
+
+
+	</div>
+	<footer>
+
+		<form th:if="${incorrectAnswer}" id="wordFormIncorrect" action="/app/exam/evaluation" method="post">
+			<input type="hidden" id="selectedWord" name="selectedWord" th:value="${translateText}">
+			<input type="hidden" name="examId" th:value="${examId}" />
+			<input type="hidden" name="score" th:value="${score}" />
+			<input type="hidden" name="lastEvaluationId" th:value="${lastEvaluationId}" />
+			<input type="hidden" name="progressBar" th:value="${progressBar}" />
+			<!-- Agrega un botón de tipo "submit" -->
+			<button class="check_button" type="button" id="submitButtonIncorrect">Continuar</button>
+		</form>
+		<form th:unless="${incorrectAnswer}" id="wordForm" action="/app/exam/evaluation" method="post">
+			<input type="hidden" id="selectedWord" name="selectedWord" value="">
+			<input type="hidden" name="examId" th:value="${examId}" />
+			<input type="hidden" name="score" th:value="${score}" />
+			<input type="hidden" name="lastEvaluationId" th:value="${lastEvaluationId}" />
+			<input type="hidden" name="progressBar" th:value="${progressBar}" />
+			<!-- Agrega un botón de tipo "submit" -->
+			<button class="check_button" type="button" id="submitButton">Enviar</button>
+		</form>
+
+		<div class="skip_button">SKIP</div>
+		<!--<div class="check_button">CHECK</div> -->
+	</footer>
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", function () {
+			// PROGRESS BAR \\
+			var progressBar = document.getElementById('progress-bar');
+
+			// Supongamos que tienes una variable "progreso" que contiene el progreso actual (un valor entre 0 y 100, por ejemplo)
+			var progreso = [[${progressBar}]]; /* Obtén el valor del progreso desde tu lógica o backend */
+
+			// Convierte el progreso a un porcentaje y actualiza el ancho de la barra de progreso
+			progressBar.style.width = progreso + '%';
+		});
+	</script>
+
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", function () {
+			var submitButtonIncorrect = document.getElementById('submitButtonIncorrect');
+			var submitButtonCorrect = document.getElementById('submitButtonCorrect');
+
+			submitButtonIncorrect.addEventListener('click', function () {
+				// Agregar lógica aquí si es necesario
+				document.getElementById('wordFormIncorrect').submit();
+			});
+
+			submitButtonCorrect.addEventListener('click', function () {
+				// Agregar lógica aquí si es necesario
+				document.getElementById('wordFormCorrect').submit();
+			});
+		});
+	</script>
+
+</body>
+
+</html>

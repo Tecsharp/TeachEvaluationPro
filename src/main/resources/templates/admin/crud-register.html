@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+
+<html lang="es" class="light-style layout-menu-fixed layout-compact"
+	dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+	data-template="vertical-menu-template-free"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+<title th:text="${title}"></title>
+
+<meta name="description" content="" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon"
+	href="/assets/img/favicon/favicon.ico" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+	rel="stylesheet" />
+
+<link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+
+<!-- Core CSS -->
+<link rel="stylesheet" href="/assets/vendor/css/core.css"
+	class="template-customizer-core-css" />
+<link rel="stylesheet" href="/assets/vendor/css/theme-default.css"
+	class="template-customizer-theme-css" />
+<link rel="stylesheet" href="/assets/css/demo.css" />
+
+<!-- Vendors CSS -->
+<link rel="stylesheet"
+	href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+<link rel="stylesheet"
+	href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+<!-- Page CSS -->
+
+<!-- Helpers -->
+<script src="../assets/vendor/js/helpers.js"></script>
+<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+<script src="../assets/js/config.js"></script>
+
+<!-- DataTable -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script type="text/javascript" charset="utf8"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"></script>
+
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+
+</head>
+
+<body>
+	<!-- Layout wrapper -->
+	<div class="layout-wrapper layout-content-navbar">
+		<div class="layout-container">
+
+
+
+			<!-- Menu -->
+
+			<aside id="layout-menu"
+				class="layout-menu menu-vertical menu bg-menu-theme"
+				th:replace="layout/layout :: adminmenu"></aside>
+			<!-- / Menu -->
+
+			<!-- Layout container -->
+			<div class="layout-page">
+				<!-- Navbar -->
+
+				<nav
+					class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+					id="layout-navbar" th:replace="layout/layout :: navbar"></nav>
+
+				<!-- / Navbar -->
+
+				<!-- Content wrapper -->
+				<div class="content-wrapper">
+
+
+
+					<!-- Content -->
+
+					<div class="container-xxl flex-grow-1 container-p-y">
+
+						<!-- 
+						REGISTRO DE SUCURSAL
+						 -->
+
+						<div class="row" th:if="${idType == 1}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+							<div class="col-xl">
+								<div class="card mb-4">
+									<div
+										class="card-header d-flex justify-content-between align-items-center">
+										<h5 class="mb-0">Agregar sucursal</h5>
+										<small class="text-muted float-end"></small>
+									</div>
+									<div class="card-body">
+										<form th:object="${filial}"
+											th:action="@{/app/crud-register/filial}" method="post">
+											<div class="mb-3">
+												<label class="form-label" for="basic-default-fullname">Nombre
+													de sucursal</label> <input type="text" class="form-control"
+													id="basic-default-fullname" placeholder="Sucursal Centro"
+													th:field="*{name}" pattern="[a-zA-Z0-9_-]+"
+													title="Solo se permiten letras, números, guiones bajos y guiones"
+													required>
+											</div>
+
+											<input type="hidden" name="id" value="1" />
+
+											<button type="submit" class="btn btn-primary">Crear</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- 
+						REGISTRO DE ESTUDIANTE
+						 -->
+						<div class="row" th:if="${idType == 2}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formAddStudentToClassroom" th:object="${userVoid}"
+									th:action="@{/app/crud-register/student}" method="post">
+									<h6>1. Información de cuenta</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Nombre
+												de usuario</label> <input type="text" id="multicol-username"
+												class="form-control" placeholder="miguelh23"
+												th:field="*{username}" required pattern="[a-zA-Z0-9_]+"
+												title="Solo se permiten letras, números y guiones bajos">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-email2">Correo
+												electrónico</label>
+											<div class="input-group input-group-merge">
+												<input type="text" id="multicol-email2" class="form-control"
+													placeholder="miguel1997@correo.com" aria-label="miguel1997"
+													aria-describedby="multicol-email2" th:field="*{email}"
+													required
+													pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+													title="Por favor, introduce una dirección de correo electrónico válida. Ejemplo: miguel1997@correo.com">
+												<span class="input-group-text" id="multicol-email2">@</span>
+											</div>
+
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-password-toggle">
+												<label class="form-label" for="multicol-password">Contraseña</label>
+												<div class="input-group input-group-merge">
+													<input type="password" id="multicol-password"
+														class="form-control" placeholder="············"
+														aria-describedby="multicol-password2"
+														th:field="*{password}" pattern="[a-zA-Z0-9_]+"
+														title="Solo se permiten letras, números y guiones bajos"
+														required> <span
+														class="input-group-text cursor-pointer"
+														id="multicol-password"><i class="bx bx-hide"></i></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr class="my-4 mx-n4">
+									<h6>2. Información personal del estudiante</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-first-name">Nombre</label>
+											<input type="text" id="multicol-first-name"
+												class="form-control" placeholder="Miguel Alberto"
+												th:field="*{name}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name">Primer
+												apellido</label> <input type="text" id="multicol-last-name"
+												class="form-control" placeholder="Martinez"
+												th:field="*{lastnameone}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name2">Segundo
+												apellido</label> <input type="text" id="multicol-last-name2"
+												class="form-control" placeholder="Rodriguez"
+												th:field="*{lastnametwo}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+									</div>
+									<div class="pt-4">
+										<input type="hidden" name="type" value="3" /> <input
+											type="hidden" name="fid" th:value="${fid}" /> <input
+											type="hidden" name="lvl" th:value="${lvl}" /> <input
+											type="hidden" name="classId" th:value="${classId}" />
+										<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+										<a class="btn btn-warning"
+											th:href="'/app/admin/school/filial/level/classroom?clssid=' + ${classId} + '&fid=' + ${fid}">Cancelar</a>
+
+									</div>
+									<h5></h5>
+								</form>
+							</div>
+
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas agregar un estudiante?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formAddStudentToClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+
+
+
+							<div class="card mb-4">
+								<h5 class="card-header">O selecciona usuarios existentes</h5>
+								<div style="margin-left: 30px;"
+									class="card-datatable table-responsive col-sm-12 col-md-11">
+									<form id="userSelectedForm" th:action="@{/app/crud-register/userselected}"
+										method="post">
+										<table
+											class="dt-multilingual table border-top dataTable no-footer dtr-column"
+											id="maestros">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Nombre</th>
+													<th>Usuario</th>
+													<th>Correo</th>
+													<th>Seleccionar</th>
+												</tr>
+											</thead>
+											<tbody class="table-border-bottom-0" style="border: 0px;">
+												<tr class="odd" th:each="student : ${studentsList}">
+													<td th:text="${student.id}">1</td>
+													<td
+														th:text="${student.name} + ' ' + ${student.lastnameone} + ' ' + ${student.lastnametwo}">Abisai</td>
+													<td th:text="${student.username}">Usuario</td>
+													<td th:text="${student.email}">a.tecsharp@gmail.com</td>
+													<td><span><input type="checkbox" name="selectedUsers"
+														th:value="${student.id}" /></span></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<input type="hidden" name="fid" th:value="${fid}" /> <input
+											type="hidden" name="classId" th:value="${classId}" />
+										<button type="button" class="btn btn-primary" onclick="checkSelectedUsers()">Agregar</button>
+										<h5></h5>
+									</form>
+								</div>
+
+								<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+								<script
+									src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+								<script>
+									$(document)
+											.ready(
+													function() {
+														$('#maestros')
+																.DataTable(
+																		{
+																			"language" : {
+																				"url" : "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+																			}
+																		});
+													});
+								</script>
+							</div>
+
+						</div>
+
+
+						<!-- 
+						REGISTRA EL MAESTRO EN CLASSROOM (SELECCION)
+						 -->
+						<div class="row" th:if="${idType == 3}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+
+							<div class="card mb-4">
+								<h5 class="card-header">Selecciona usuarios existentes</h5>
+								<div style="margin-left: 30px;" class="card-datatable table-responsive col-sm-12 col-md-11">
+									<form id="userSelectedForm" th:action="@{/app/crud-register/userselected}" method="post">
+
+										<table
+											class="dt-multilingual table border-top dataTable no-footer dtr-column"
+											id="maestros">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Nombre</th>
+													<th>Usuario</th>
+													<th>Correo</th>
+													<th>Seleccionar</th>
+												</tr>
+											</thead>
+											<tbody class="table-border-bottom-0" style="border: 0px;">
+												<tr class="odd" th:each="teacher : ${teacherList}">
+													<td th:text="${teacher.id}">1</td>
+													<td
+														th:text="${teacher.name} + ' ' + ${teacher.lastnameone} + ' ' + ${teacher.lastnametwo}">Abisai</td>
+													<td th:text="${teacher.username}">Usuario</td>
+													<td th:text="${teacher.email}">a.tecsharp@gmail.com</td>
+													<td><span><input type="checkbox" name="selectedUsers"
+														th:value="${teacher.id}" /></span></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<input type="hidden" name="fid" th:value="${fid}" /> <input
+											type="hidden" name="classId" th:value="${classId}" />
+										<button type="button" class="btn btn-primary" onclick="checkSelectedUsers()">Agregar</button>
+
+										<h5></h5>
+									</form>
+								</div>
+
+								<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+								<script
+									src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+								<script>
+									$(document)
+											.ready(
+													function() {
+														$('#maestros')
+																.DataTable(
+																		{
+																			"language" : {
+																				"url" : "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+																			}
+																		});
+													});
+								</script>
+							</div>
+						</div>
+
+
+						<!-- 
+						MODIFICA EL ESTUDIANTE
+						 -->
+
+						<div class="row" th:if="${idType == 6}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formModifyUser" th:object="${utom}"
+									th:action="@{/app/crud-register/modify-user}" method="post">
+									<h6>1. Información de cuenta</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Nombre
+												de usuario</label> <input type="text" id="multicol-username"
+												class="form-control" placeholder="miguelh23"
+												th:field="*{username}" required pattern="[a-zA-Z0-9_]+"
+												title="Solo se permiten letras, números y guiones bajos">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-email2">Correo
+												electrónico</label>
+											<div class="input-group input-group-merge">
+												<input type="text" id="multicol-email2" class="form-control"
+													placeholder="miguel1997@correo.com" aria-label="miguel1997"
+													aria-describedby="multicol-email2" th:field="*{email}"
+													required
+													pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+													title="Por favor, introduce una dirección de correo electrónico válida. Ejemplo: miguel1997@correo.com">
+												<span class="input-group-text" id="multicol-email2">@</span>
+											</div>
+
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-password-toggle">
+												<label class="form-label" for="multicol-password">Contraseña</label>
+												<div class="input-group input-group-merge">
+													<input type="password" id="multicol-password"
+														class="form-control" placeholder="············"
+														aria-describedby="multicol-password2"
+														th:field="*{password}" pattern="[a-zA-Z0-9_]+"
+														title="Solo se permiten letras, números y guiones bajos">
+													<span class="input-group-text cursor-pointer"
+														id="multicol-password"><i class="bx bx-hide"></i></span>
+
+												</div>
+												<p></p>
+												<p style="color: red;">Si no modifica la contraseña, no
+													se verá afectada.</p>
+											</div>
+										</div>
+									</div>
+									<hr class="my-4 mx-n4">
+									<h6>2. Información personal del estudiante</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-first-name">Nombre</label>
+											<input type="text" id="multicol-first-name"
+												class="form-control" placeholder="Miguel Alberto"
+												th:field="*{name}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name">Primer
+												apellido</label> <input type="text" id="multicol-last-name"
+												class="form-control" placeholder="Martinez"
+												th:field="*{lastnameone}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name2">Segundo
+												apellido</label> <input type="text" id="multicol-last-name2"
+												class="form-control" placeholder="Rodriguez"
+												th:field="*{lastnametwo}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+									</div>
+									<div class="pt-4">
+										<input type="hidden" name="type" value="3" /> <input
+											type="hidden" name="fid" th:value="${fid}" /> <input
+											type="hidden" name="pathId" value="1" /> <input
+											type="hidden" name="lvl" th:value="${lvl}" /> <input
+											type="hidden" name="classId" th:value="${classId}" /> <input
+											type="hidden" th:field="*{id}" value="${utom.id}" />
+										<button type="submit" class="btn btn-primary me-sm-3 me-1">Modificar</button>
+										<a class="btn btn-warning"
+											th:href="'/app/admin/school/filial/level/classroom?clssid=' + ${classId} + '&fid=' + ${fid}">Cancelar</a>
+									</div>
+									<h5></h5>
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formModifyUser'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+
+						<!-- 
+						EDITAR AULA
+						 -->
+						<div class="row" th:if="${idType == 7}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header"></h5>
+								<form id="formModifyClassroom" th:object="${classroom}"
+									th:action="@{/app/crud-register/classroom-modify}"
+									method="post">
+									<h5>Información del Aula</h5>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Aula</label>
+											<input type="text" id="multicol-name" class="form-control"
+												placeholder="miguelh23" th:field="*{name}"
+												pattern="[a-zA-Z0-9_-]+"
+												title="Solo se permiten letras, números, guiones bajos y guiones"
+												required>
+										</div>
+
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Nivel
+												(no modificable)</label> <input type="text" id="multicol-name"
+												class="form-control" placeholder="miguelh23"
+												th:field="*{level.name}" readonly>
+										</div>
+
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-country">Grado</label>
+											<div class="position-relative">
+												<select id="multicol-country"
+													class="select2 form-select select2-hidden-accessible"
+													data-allow-clear="true" data-select2-id="multicol-country"
+													tabindex="-1" aria-hidden="true" th:field="*{grade.id}">
+													<option value="" data-select2-id="1">Selecciona
+														uno</option>
+													<!-- Itera sobre la lista de grados y genera las opciones dinámicamente -->
+													<th:block th:each="grade : ${gradeList}">
+														<option th:value="${grade.id}" th:text="${grade.name}"></option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+
+										<div class="pt-4">
+
+											<input type="hidden" name="clid" th:value="${classroom.id}" />
+											<input type="hidden" name="levelid"
+												th:value="${classroom.level.id}" /> <input type="hidden"
+												name="fid" th:value="${fid}" />
+
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Modificar</button>
+										</div>
+									</div>
+									<h6></h6>
+
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el aula?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formModifyClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+							<div class="row">
+								<div class="col-md-6 col-lg-4">
+									<div class="card mb-3">
+										<div class="card-body">
+											<h5 class="card-title">Eliminar aula</h5>
+											<p class="card-text">Sólo se puede eliminar si el aula
+												está totalmente vacía. Sin maestros y estudiantes.</p>
+											<a href="#" class="btn rounded-pill btn-danger"
+												th:onclick="|mostrarAlertaEliminar('/app/crud-register/remove-classrm' + '?classId=' + ${classroom.id} + '&fid=' + ${classroom.filial.id})|">Eliminar</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-lg-4">
+									<div class="card text-center mb-3">
+										<div class="card-body">
+											<h5 class="card-title">Vaciar aula</h5>
+											<p class="card-text">Remueve a los maestros, estudiantes
+												y exámenes, pero no los elimina del sistema. El aula queda
+												vacía.</p>
+											<a href="#" class="btn rounded-pill btn-danger"
+												th:onclick="|mostrarAlertaEliminar('/app/crud-register/clean-classrm' + '?classId=' + ${classroom.id} + '&fid=' + ${classroom.filial.id})|">Vaciar</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- EXAMPLE 
+						  <div class="col-md-6 col-lg-4">
+						    <div class="card text-end mb-3">
+						      <div class="card-body">
+						        <h5 class="card-title">example</h5>
+						        <p class="card-text">example</p>
+						        <a href="javascript:void(0)" class="btn btn-warning">example</a>
+						      </div>
+						    </div>
+						  </div>
+						  -->
+							</div>
+
+						</div>
+
+						<!-- 
+						MODIFICA EL MAESTRO DESDE CLASSROOM
+						 -->
+
+						<div class="row" th:if="${idType == 9}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formModifyUser" th:object="${utom}"
+									th:action="@{/app/crud-register/modify-user}" method="post">
+									<h6>1. Información de cuenta</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Nombre
+												de usuario</label> <input type="text" id="multicol-username"
+												class="form-control" placeholder="miguelh23"
+												th:field="*{username}" required pattern="[a-zA-Z0-9_]+"
+												title="Solo se permiten letras, números y guiones bajos">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-email2">Correo
+												electrónico</label>
+											<div class="input-group input-group-merge">
+												<input type="text" id="multicol-email2" class="form-control"
+													placeholder="miguel1997@correo.com" aria-label="miguel1997"
+													aria-describedby="multicol-email2" th:field="*{email}"
+													required
+													pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+													title="Por favor, introduce una dirección de correo electrónico válida. Ejemplo: miguel1997@correo.com">
+												<span class="input-group-text" id="multicol-email2">@</span>
+											</div>
+
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-password-toggle">
+												<label class="form-label" for="multicol-password">Contraseña</label>
+												<div class="input-group input-group-merge">
+													<input type="password" id="multicol-password"
+														class="form-control" placeholder="············"
+														aria-describedby="multicol-password2"
+														th:field="*{password}" pattern="[a-zA-Z0-9_]+"
+														title="Solo se permiten letras, números y guiones bajos">
+													<span class="input-group-text cursor-pointer"
+														id="multicol-password"><i class="bx bx-hide"></i></span>
+
+												</div>
+												<p></p>
+												<p style="color: red;">Si no modifica la contraseña, no
+													se verá afectada.</p>
+											</div>
+										</div>
+									</div>
+									<hr class="my-4 mx-n4">
+									<h6>2. Información personal del estudiante</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-first-name">Nombre</label>
+											<input type="text" id="multicol-first-name"
+												class="form-control" placeholder="Miguel Alberto"
+												th:field="*{name}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name">Primer
+												apellido</label> <input type="text" id="multicol-last-name"
+												class="form-control" placeholder="Martinez"
+												th:field="*{lastnameone}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name2">Segundo
+												apellido</label> <input type="text" id="multicol-last-name2"
+												class="form-control" placeholder="Rodriguez"
+												th:field="*{lastnametwo}" required pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios">
+										</div>
+									</div>
+									<div class="pt-4">
+										<input type="hidden" name="type" value="2" /> <input
+											type="hidden" name="fid" th:value="${fid}" /> <input
+											type="hidden" name="lvl" th:value="${lvl}" /> <input
+											type="hidden" name="pathId" value="1" /> <input
+											type="hidden" name="classId" th:value="${classId}" /> <input
+											type="hidden" th:field="*{id}" value="${utom.id}" />
+										<button type="submit" class="btn btn-primary me-sm-3 me-1">Modificar</button>
+										<a class="btn btn-warning"
+											th:href="'/app/admin/school/filial/level/classroom?clssid=' + ${classId} + '&fid=' + ${fid}">Cancelar</a>
+									</div>
+									<h5></h5>
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formModifyUser'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+
+						<!-- 
+						REGISTRO DE CLASSROOM PRIMARIA
+						 -->
+						<div class="row" th:if="${idType == 11}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formRegisterClassroom" class="card-body"
+									th:object="${classroom}"
+									th:action="@{/app/crud-register/classroom}" method="post">
+
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="name-classroom">Nombre
+												clave</label> <input type="text" id="name-classroom"
+												class="form-control" placeholder="1-A" th:field="*{name}"
+												pattern="[a-zA-Z0-9_-]+"
+												title="Solo se permiten letras, números y guiones bajos"
+												required>
+										</div>
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-country">Grado</label>
+											<div class="position-relative">
+												<select id="multicol-country"
+													class="select2 form-select select2-hidden-accessible"
+													data-allow-clear="true" data-select2-id="multicol-country"
+													tabindex="-1" aria-hidden="true" th:field="*{grade.id}">
+													<option value="" data-select2-id="1">Selecciona
+														uno</option>
+													<!-- Itera sobre la lista de grados y genera las opciones dinámicamente -->
+													<th:block th:each="grade : ${gradeList}">
+														<option th:value="${grade.id}" th:text="${grade.name}"></option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+
+
+
+										<div class="pt-4">
+
+											<input type="hidden" name="id" value="11" /> <input
+												type="hidden" name="fid" th:value="${fid}" />
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+											<button type="reset" class="btn btn-label-secondary">Cancelar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formRegisterClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+
+						<!-- 
+						REGISTRA CLASSROOM SECUNDARIA
+						 -->
+						<div class="row" th:if="${idType == 12}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formRegisterClassroom" class="card-body"
+									th:object="${classroom}"
+									th:action="@{/app/crud-register/classroom}" method="post">
+
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="name-classroom">Nombre
+												clave</label> <input type="text" id="name-classroom"
+												class="form-control" placeholder="1-A" th:field="*{name}"
+												pattern="[a-zA-Z0-9_-]+"
+												title="Solo se permiten letras, números y guiones bajos"
+												required>
+										</div>
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-country">Grado</label>
+											<div class="position-relative">
+												<select id="multicol-country"
+													class="select2 form-select select2-hidden-accessible"
+													data-allow-clear="true" data-select2-id="multicol-country"
+													tabindex="-1" aria-hidden="true" th:field="*{grade.id}">
+													<option value="" data-select2-id="1">Selecciona
+														uno</option>
+													<!-- Itera sobre la lista de grados y genera las opciones dinámicamente -->
+													<th:block th:each="grade : ${gradeList}">
+														<option th:value="${grade.id}" th:text="${grade.name}"></option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+
+
+
+										<div class="pt-4">
+
+											<input type="hidden" name="id" value="12" /> <input
+												type="hidden" name="fid" th:value="${fid}" />
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+											<button type="reset" class="btn btn-label-secondary">Cancelar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formRegisterClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+						<!-- 
+						REGISTRA CLASSROOM PREPARATORIA
+						 -->
+						<div class="row" th:if="${idType == 13}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formRegisterClassroom" class="card-body"
+									th:object="${classroom}"
+									th:action="@{/app/crud-register/classroom}" method="post">
+
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="name-classroom">Nombre
+												clave</label> <input type="text" id="name-classroom"
+												class="form-control" placeholder="1-A" th:field="*{name}"
+												pattern="[a-zA-Z0-9_-]+"
+												title="Solo se permiten letras, números y guiones bajos"
+												required>
+										</div>
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-country">Grado</label>
+											<div class="position-relative">
+												<select id="multicol-country"
+													class="select2 form-select select2-hidden-accessible"
+													data-allow-clear="true" data-select2-id="multicol-country"
+													tabindex="-1" aria-hidden="true" th:field="*{grade.id}">
+													<option value="" data-select2-id="1">Selecciona
+														uno</option>
+													<!-- Itera sobre la lista de grados y genera las opciones dinámicamente -->
+													<th:block th:each="grade : ${gradeList}">
+														<option th:value="${grade.id}" th:text="${grade.name}"></option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+
+
+
+										<div class="pt-4">
+
+											<input type="hidden" name="id" value="13" /> <input
+												type="hidden" name="fid" th:value="${fid}" />
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+											<button type="reset" class="btn btn-label-secondary">Cancelar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formRegisterClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+
+						</div>
+
+
+
+
+
+						<!-- 
+						REGISTRO DE CLASSROOM UNIVERSIDAD
+						 -->
+						<div class="row" th:if="${idType == 14}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formRegisterClassroom" class="card-body"
+									th:object="${classroom}"
+									th:action="@{/app/crud-register/classroom}" method="post">
+
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="name-classroom">Nombre
+												clave</label> <input type="text" id="name-classroom"
+												class="form-control" placeholder="1-A" th:field="*{name}"
+												pattern="[a-zA-Z0-9_-]+"
+												title="Solo se permiten letras, números y guiones bajos"
+												required>
+										</div>
+
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-country">Grado</label>
+											<div class="position-relative">
+												<select id="multicol-country"
+													class="select2 form-select select2-hidden-accessible"
+													data-allow-clear="true" data-select2-id="multicol-country"
+													tabindex="-1" aria-hidden="true" th:field="*{grade.id}">
+													<option value="" data-select2-id="1">Selecciona
+														uno</option>
+													<!-- Itera sobre la lista de grados y genera las opciones dinámicamente -->
+													<th:block th:each="grade : ${gradeList}">
+														<option th:value="${grade.id}" th:text="${grade.name}"></option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+
+
+
+										<div class="pt-4">
+
+											<input type="hidden" name="id" value="14" /> <input
+												type="hidden" name="fid" th:value="${fid}" />
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+											<button type="reset" class="btn btn-label-secondary">Cancelar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas modificar el usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formRegisterClassroom'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+						<!-- 
+						REGISTRA EL MAESTRO DESDE FILIAL
+						 -->
+						<div class="row" th:if="${idType == 15}">
+							<h4 class="py-3 mb-4" th:text="${title}"></h4>
+							<!-- single card  -->
+
+							<div class="card mb-4">
+								<h5 class="card-header" th:text="${headerFormText}"></h5>
+								<form id="formRegisterTeacher" th:object="${userVoid}"
+									th:action="@{/app/crud-register/teacher}" method="post">
+									<h6>1. Información de cuenta</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-username">Nombre
+												de usuario</label> <input type="text" id="multicol-username"
+												class="form-control" placeholder="miguelh23"
+												th:field="*{username}" pattern="[a-zA-Z0-9_]+"
+												title="Solo se permiten letras, números y guiones bajos"
+												required>
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-email2">Correo
+												electrónico</label>
+											<div class="input-group input-group-merge">
+												<input type="text" id="multicol-email2" class="form-control"
+													placeholder="miguel1997@correo.com" aria-label="miguel1997"
+													aria-describedby="multicol-email2" th:field="*{email}"
+													required
+													pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+													title="Por favor, introduce una dirección de correo electrónico válida. Ejemplo: miguel1997@correo.com">
+												<span class="input-group-text" id="multicol-email2">@</span>
+											</div>
+
+										</div>
+										<div class="col-md-6">
+											<div class="form-password-toggle">
+												<label class="form-label" for="multicol-password">Contraseña</label>
+												<div class="input-group input-group-merge">
+													<input type="password" id="multicol-password"
+														class="form-control" placeholder="············"
+														aria-describedby="multicol-password"
+														th:field="*{password}" pattern="[a-zA-Z0-9_]+"
+														title="Solo se permiten letras, números y guiones bajos"
+														required> <span
+														class="input-group-text cursor-pointer"
+														id="multicol-password"><i class="bx bx-hide"></i></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr class="my-4 mx-n4">
+									<h6>2. Información personal del maestro</h6>
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-first-name">Nombre</label>
+											<input type="text" id="multicol-first-name"
+												class="form-control" placeholder="Miguel Alberto"
+												th:field="*{name}" pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios" required>
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name">Primer
+												apellido</label> <input type="text" id="multicol-last-name"
+												class="form-control" placeholder="Martinez"
+												th:field="*{lastnameone}" pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios" required>
+										</div>
+										<div class="col-md-6">
+											<label class="form-label" for="multicol-last-name2">Segundo
+												apellido</label> <input type="text" id="multicol-last-name2"
+												class="form-control" placeholder="Rodriguez"
+												th:field="*{lastnametwo}" pattern="[a-zA-Z ]+"
+												title="Solo se permiten letras y espacios" required>
+										</div>
+										
+										<hr class="my-4 mx-n4">
+										<h6>3. Selecciona las materias</h6>
+										<div class="col-md-12">
+									        <table id="teacherTable" class="table table-striped">
+									            <thead>
+									                <tr>
+									                    <th>ID</th>
+									                    <th>Materia</th>
+									                    <th>Seleccionar</th>
+									                    <!-- Agrega más columnas según tus datos -->
+									                </tr>
+									            </thead>
+									            <tbody>
+									            	<tr th:each="subject : ${subjectList}">
+									                <td th:text="${subject.id}"></td>
+									                <td th:text="${subject.name}"></td>
+									                <td><span><input type="checkbox" name="selectedSubjects"
+														th:value="${subject.id}" /></span></td>
+									                </tr>
+									            </tbody>
+									        </table>
+									    </div>
+									
+
+
+										<div class="pt-4">
+
+											<input type="hidden" name="type" value="2" /> <input
+												type="hidden" name="fid" th:value="${fid}" /> <input
+												type="hidden" name="classId" th:value="${classId}" /> <input
+												type="hidden" name="lvl" th:value="${lvl}" />
+											<button type="submit" class="btn btn-primary me-sm-3 me-1">Registrar</button>
+											<a class="btn btn-warning"
+												th:href="'http://localhost/app/crud?fid='+ ${fid}">Cancelar</a>
+
+										</div>
+										<h5></h5>
+									</div>
+								</form>
+							</div>
+
+							<div class="alert alert-warning" role="alert"
+								id="confirmacionAlerta" style="display: none;">
+								<p>¿Estás seguro de que deseas registrar este usuario?</p>
+								<button type="button" class="btn btn-primary" id="confirmarBtn">Confirmar</button>
+								<button type="button" class="btn btn-warning" id="cancelarBtn">Cancelar</button>
+							</div>
+
+							<script th:inline="javascript">
+								document
+										.addEventListener(
+												'DOMContentLoaded',
+												function() {
+													var formulario = document
+															.getElementById('formRegisterTeacher'); // Reemplaza 'tuFormulario' con el ID real de tu formulario
+													var alerta = document
+															.getElementById('confirmacionAlerta');
+													var confirmarBtn = document
+															.getElementById('confirmarBtn');
+													var cancelarBtn = document
+															.getElementById('cancelarBtn');
+
+													formulario
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		event
+																				.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+																		// Muestra la alerta de confirmación
+																		alerta.style.display = 'block';
+																	});
+
+													confirmarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Confirma y envía el formulario
+																		formulario
+																				.submit();
+																	});
+
+													cancelarBtn
+															.addEventListener(
+																	'click',
+																	function() {
+																		// Oculta la alerta si se cancela
+																		alerta.style.display = 'none';
+																	});
+												});
+							</script>
+
+						</div>
+
+
+
+						<!--
+						INICIO DE FOOTER
+						 -->
+						<div class="row">
+
+							<!-- / Content -->
+
+							<!-- Footer -->
+							<footer class="content-footer footer bg-footer-theme"
+								th:replace="layout/layout :: footer"> </footer>
+							<!-- / Footer -->
+
+							<div class="content-backdrop fade"></div>
+
+
+						</div>
+						<!-- Content wrapper -->
+					</div>
+
+					<!-- / Layout page -->
+				</div>
+
+				<!-- Overlay -->
+				<div class="layout-overlay layout-menu-toggle"></div>
+			</div>
+			<!-- / Layout wrapper -->
+
+		</div>
+	</div>
+
+
+
+
+	<!-- La estructura de la alerta modal -->
+	<div class="modal fade" id="confirmarEliminarModal" tabindex="-1"
+		role="dialog" aria-labelledby="confirmarEliminarModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar
+						eliminación</h5>
+
+				</div>
+				<div class="modal-body">Si no quieres eliminar el aula, da
+					clic fuera de la alerta.</div>
+				<div class="modal-footer">
+					<a id="btnEliminar" class="btn btn-danger">Eliminar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Core JS -->
+	<!-- build:js assets/vendor/js/core.js -->
+
+
+	<script src="/assets/vendor/libs/popper/popper.js"></script>
+	<script src="/assets/vendor/js/bootstrap.js"></script>
+	<script
+		src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+	<script src="/assets/vendor/js/menu.js"></script>
+
+	<!-- endbuild -->
+
+	<!-- Vendors JS -->
+	<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+	<!-- Main JS -->
+	<script src="/assets/js/main.js"></script>
+
+	<!-- Page JS -->
+	<script src="/assets/js/dashboards-analytics.js"></script>
+
+	<!-- Place this tag in your head or just before your close body tag. -->
+	<!-- Coloca el siguiente script al final del body o donde sea apropiado -->
+	<script th:inline="javascript">
+		/*<![CDATA[*/// Para evitar problemas con Thymeleaf
+		var uE = /*[[${uE}]]*/false;
+
+		// Verifica si errorExiste es verdadero y muestra la alerta
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							if (uE) {
+								Swal
+										.fire({
+											icon : 'error',
+											title : 'Error',
+											text : 'El usuario o el correo ya están en uso, verifica los datos.',
+										});
+							}
+						});
+		/*]]>*/
+	</script>
+
+
+
+
+
+	<script th:inline="javascript">
+		function mostrarAlertaEliminar(urlEliminar) {
+			// Muestra una alerta modal de Bootstrap
+			$('#confirmarEliminarModal').modal('show');
+
+			// Configura la URL de eliminación en el botón "Eliminar"
+			$('#btnEliminar').attr('href', urlEliminar);
+		}
+	</script>
+	
+		
+		<script th:inline="javascript">
+    function checkSelectedUsers() {
+        var checkboxes = document.getElementsByName("selectedUsers");
+        var isChecked = Array.prototype.slice.call(checkboxes).some(function(checkbox) {
+            return checkbox.checked;
+        });
+
+        if (isChecked) {
+            // Si al menos un checkbox está seleccionado, envía el formulario
+            document.getElementById("userSelectedForm").submit();
+        } else {
+            // Si ningún checkbox está seleccionado, muestra un mensaje de error o realiza otra acción
+            alert("Selecciona al menos un usuario antes de agregar. 123");
+        }
+    }
+	</script>
+	
+	
+	
+	<!-- IINICIA LA TABLA DE REGISTRO DE MATERIAS
+	EN EL REGISTRO DE USUARIO-TEACHER -->
+	<script>
+    $(document).ready(function () {
+        $('#subjectTable').DataTable();
+    });
+	</script>
+
+		
+
+
+
+</body>
+
+</html>
